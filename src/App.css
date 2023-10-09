@@ -1,38 +1,84 @@
-.App {
+.container {
+  width: 100%;
+}
+
+.topSection {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.title {
+  color: #0f305f;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.assignBtn {
+  color: #0f305f;
+  background-color: transparent;
+  border: 2px solid #0f305f;
+  padding: 10px;
+  font-size: 1.5rem;
+  border-radius: 10px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.assignBtn:hover {
+  cursor: pointer;
+  background-color: #0f305f;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.workSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.registerSection {
+  padding-left: 20px;
+}
+
+.leadSection {
+  border-bottom: 1px solid #0f305f;
+  border-bottom-style: dashed;
+}
+
+.addLead,
+.addAgent {
+  background-color: transparent;
+  border: 0;
+  color: #0f305f;
+  font-size: 1.2rem;
+  text-align: right;
+  cursor: pointer;
+  padding: 20px;
+}
+
+.leadInfo,
+.agentInfo {
+  color: #0f305f;
+  font-size: 1.1rem;
+}
+
+.resultsSection {
+  padding-left: 20px
+}
+
+.resultTag {
+  color: #0f305f;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.agentTitle {
+  color: #0f305f;
+  font-size: 1.4rem;
+}
+
+@media (max-width: 750px) {
+  .workSection {
+    grid-template-columns: 1fr;
   }
-  to {
-    transform: rotate(360deg);
+
+  .agentSection {
+    border-bottom: 1px solid #0f305f;
+    border-bottom-style: dashed;
   }
 }

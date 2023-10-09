@@ -1,0 +1,38 @@
+.LFContainer {
+  border: 1px solid #0f305f;
+  padding: 20px;
+  width: fit-content;
+}
+
+label {
+  color: #0f305f;
+  font-size: small;
+}
+
+input {
+  width: 300px;
+}
+
+.saveLeadBtn,
+.cancelBtn {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: transparent;
+  color: #0f305f;
+  border: 1px solid #0f305f;
+}
+
+.saveLeadBtn:hover,
+.cancelBtn:hover {
+  background-color: #0f305f;
+  color: white;
+}
+
+.cancelBtn{
+    margin-left: 20px;
+}
+
+.incorrectInfoLegend {
+  color: red;
+  font-size: small;
+}
