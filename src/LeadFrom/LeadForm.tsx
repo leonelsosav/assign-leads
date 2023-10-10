@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import "./LeadForm.css";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import { Lead } from "../App";
+import { ILeadAndAgent } from "../App";
 
 const LeadForm = ({
   saveLeadFn,
   closeFormFn,
 }: {
-  saveLeadFn: ({ phone, name }: Lead) => void;
+  saveLeadFn: ({ phone, name }: ILeadAndAgent) => void;
   closeFormFn: () => void;
 }) => {
   const [phone, setPhone] = useState("");

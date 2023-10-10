@@ -2,33 +2,44 @@ import React, { useState } from "react";
 import "./App.css";
 import LeadForm from "./LeadFrom/LeadForm";
 import AgentForm from "./AgentForm/AgentForm";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-export interface Lead {
+export interface ILeadAndAgent {
   phone: string;
   name: string;
 }
 
 function App() {
-  const [leads, setLeads] = useState(Array<Lead>);
-  const [agents, setAgents] = useState(Array<string>);
+  const [leads, setLeads] = useState(Array<ILeadAndAgent>);
+  const [agents, setAgents] = useState(agentsInfo);
   const [showLeadForm, setShowLeadForm] = useState(false);
   const [showAgentForm, setShowAgentForm] = useState(false);
-  const [leadsRandomized, setLeadsRandomized] = useState(Array<Array<Lead>>);
-  const [agentsRandomized, setAgentsRandomized] = useState(Array<string>);
+  const [leadsRandomized, setLeadsRandomized] = useState(
+    Array<Array<ILeadAndAgent>>
+  );
+  const [agentsRandomized, setAgentsRandomized] = useState(
+    Array<ILeadAndAgent>
+  );
 
-  const addLead = (newLead: Lead) => {
+  const addLead = (newLead: ILeadAndAgent) => {
     setLeads([...leads, newLead]);
     setShowLeadForm(false);
   };
 
-  const addAgent = (agent: string) => {
+  const removeLead = (idx: number) => {
+    const newLeadsArr = leads.filter((val, i) => i !== idx);
+    setLeads(newLeadsArr);
+  };
+
+  const addAgent = (agent: ILeadAndAgent) => {
     setAgents([...agents, agent]);
     setShowAgentForm(false);
   };
 
   const shuffleInfo = () => {
-    let newLeads = shuffleLeads(leads);
-    let newAgents = shuffleAgents(agents);
+    let newLeads = shuffleArr(leads);
+    let newAgents = shuffleArr(agents);
 
     let leadsChuncked = [];
     const chunkSize = newLeads.length / newAgents.length;
@@ -40,18 +51,31 @@ function App() {
     setLeadsRandomized(leadsChuncked.reverse());
   };
 
-  const shuffleLeads = (array: Lead[]) => {
+  const shuffleArr = (array: ILeadAndAgent[]) => {
     return array
       .map((a) => ({ sort: Math.random(), value: a }))
       .sort((a, b) => a.sort - b.sort)
       .map((a) => a.value);
   };
 
-  const shuffleAgents = (array: string[]) => {
-    return array
-      .map((a) => ({ sort: Math.random(), value: a }))
-      .sort((a, b) => a.sort - b.sort)
-      .map((a) => a.value);
+  const sendInfo = (idx: number) => {
+    let phoneNumber = encodeURIComponent(agentsRandomized[idx].phone);
+    let messages = [];
+
+    for (var i = 0; i < leadsRandomized[idx].length; i++) {
+      var lead = leadsRandomized[idx][i];
+      if (lead.phone) {
+        messages.push(encodeURIComponent("+" + lead.phone + " - " + lead.name));
+      }
+    }
+    let messageWithLineBreaks = messages.join("%0A");
+    let whatsappURL =
+      "https://api.whatsapp.com/send?phone=" +
+      phoneNumber +
+      "&text=" +
+      messageWithLineBreaks;
+
+    window.open(whatsappURL, "_blank");
   };
 
   return (
@@ -79,6 +103,10 @@ function App() {
               return (
                 <p key={idx} className="leadInfo">
                   {idx + 1}.- +{lead.phone} - {lead.name}
+                  <DeleteOutlineIcon
+                    className="icon"
+                    onClick={() => removeLead(idx)}
+                  />
                 </p>
               );
             })}
@@ -97,7 +125,7 @@ function App() {
             {agents.map((agent, idx) => {
               return (
                 <p key={idx} className="agentInfo">
-                  {idx + 1}.- {agent}
+                  {idx + 1}.- {agent.name} - {agent.phone}
                 </p>
               );
             })}
@@ -109,16 +137,21 @@ function App() {
           {agentsRandomized.map((agent, idx) => {
             return (
               <div key={idx + 10 + "key"}>
-                <p key={agent} className="agentTitle">
-                  {agent}
+                <p key={agent.name} className="agentTitle">
+                  {agent.name}
+                  <WhatsAppIcon
+                    className="icon"
+                    onClick={() => sendInfo(idx)}
+                  />
                 </p>
-                {leadsRandomized[idx].map((lead) => {
-                  return (
-                    <p key={lead.phone} className="leadInfo">
-                      +{lead.phone} - {lead.name}
-                    </p>
-                  );
-                })}
+                {leadsRandomized.length > 0 &&
+                  leadsRandomized[idx].map((lead) => {
+                    return (
+                      <p key={lead.phone} className="leadInfo">
+                        +{lead.phone} - {lead.name}
+                      </p>
+                    );
+                  })}
               </div>
             );
           })}
@@ -129,3 +162,34 @@ function App() {
 }
 
 export default App;
+
+const agentsInfo = [
+  {
+    name: "Alejandra Sandoval",
+    phone: "+525511218421",
+  },
+  {
+    name: "Angelica Vigueras",
+    phone: "+525524954139",
+  },
+  {
+    name: "Claudia Luna",
+    phone: "+525548205748",
+  },
+  {
+    name: "Daniela Luna",
+    phone: "+525628021429",
+  },
+  {
+    name: "Fernanda Ibarra",
+    phone: "+525533722711",
+  },
+  {
+    name: "Martha Sosa",
+    phone: "+525519015467",
+  },
+  {
+    name: "Pablo Sandoval",
+    phone: "+525564682858",
+  },
+];

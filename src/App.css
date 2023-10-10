@@ -1,3 +1,4 @@
+
 .container {
   width: 100%;
 }
@@ -53,7 +54,6 @@
 
 .leadInfo,
 .agentInfo {
-  color: #0f305f;
   font-size: 1.1rem;
 }
 
@@ -72,9 +72,18 @@
   font-size: 1.4rem;
 }
 
+.icon {
+  margin-left: 20px;
+}
+
+.icon:hover {
+  cursor: pointer;
+}
+
 @media (max-width: 750px) {
   .workSection {
     grid-template-columns: 1fr;
+    margin-bottom: 150px;
   }
 
   .agentSection {
